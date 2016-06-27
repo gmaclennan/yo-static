@@ -1,0 +1,18 @@
+{
+  "title": "My Site",
+  "url": "",
+  "content_dir": "_content",
+  "pages_dir": "_pages",
+  "layouts_dir": "_layouts",
+  "site_dir": "_site",
+  "config_file": "_config.json",
+  "markdown_opts": {
+    "html": true,
+    "linkify": true,
+    "typographer": true
+  },
+  "blacklist": [
+    "package.json",
+    "CNAME"
+  ]
+}

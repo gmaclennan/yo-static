@@ -1,0 +1,21 @@
+#!/usr/bin/env node
+
+var argv = require('minimist')(process.argv.slice(2))
+
+var buildSite = require('../scripts/build-site')
+var buildJavascript = require('../scripts/build-javascript')
+var serve = require('../scripts/serve')
+
+switch (argv._[0]) {
+  case 'build':
+    buildSite(argv)
+    break
+  case 'build-js':
+    buildJavascript()
+    break
+  case 'serve':
+    serve(argv)
+    break
+  default:
+    console.log('command not known')
+}

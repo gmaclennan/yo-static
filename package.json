@@ -1,0 +1,70 @@
+{
+  "name": "yo-static",
+  "version": "1.0.0",
+  "description": "Yo-yo static isomorphic site generator",
+  "main": "index.js",
+  "bin": "./bin/yo-static",
+  "browser": {
+    "./lib/api.js": "./lib/api-browser.js"
+  },
+  "browserify": {
+    "transform": [
+      "bulkify"
+    ]
+  },
+  "dependencies": {
+    "acorn": "^3.2.0",
+    "base-router": "^1.1.0",
+    "bpb": "^0.2.2",
+    "budo": "^8.3.0",
+    "bulk-require": "^1.0.0",
+    "bulkify": "^1.4.0",
+    "chokidar": "^1.6.0",
+    "debug": "^2.2.0",
+    "deep-equal": "^1.0.1",
+    "deepmerge": "^0.2.10",
+    "envify": "^3.4.1",
+    "falafel": "^1.2.0",
+    "flat": "^2.0.0",
+    "glob": "^7.0.5",
+    "global": "^4.3.0",
+    "gray-matter": "^2.0.2",
+    "jstransform": "^11.0.3",
+    "markdown-it": "^7.0.0",
+    "markdown-it-footnote": "^2.0.0",
+    "minimist": "^1.2.0",
+    "mkdirp": "^0.5.1",
+    "object-assign": "^4.1.0",
+    "rimraf": "^2.5.2",
+    "run-parallel-limit": "^1.0.3",
+    "slug": "^0.9.1",
+    "stripify": "^4.0.0",
+    "through": "^2.3.8",
+    "through2": "^2.0.1",
+    "titlecase": "^1.1.2",
+    "uglifyify": "^3.0.2",
+    "unassertify": "^2.0.3",
+    "unreachable-branch-transform": "^0.5.1",
+    "varify": "^0.1.1",
+    "xhr": "^2.2.0",
+    "yo-yo": "^1.2.1",
+    "yo-yoify": "^3.0.0"
+  },
+  "devDependencies": {
+    "standard": "^7.1.2",
+    "tape": "^4.6.0"
+  },
+  "scripts": {
+    "test": "standard && tape test/**/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gmaclennan/yo-static.git"
+  },
+  "author": "Gregor MacLennan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gmaclennan/yo-static/issues"
+  },
+  "homepage": "https://github.com/gmaclennan/yo-static#readme"
+}
