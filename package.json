@@ -47,7 +47,7 @@
     "through2": "^2.0.1",
     "titlecase": "^1.1.2",
     "uglifyify": "^3.0.2",
-    "unassertify": "^2.0.3",
+    "unassertify": "gmaclennan/unassertify#http-assert",
     "unreachable-branch-transform": "^0.5.1",
     "varify": "^0.1.1",
     "xhr": "^2.2.0",
