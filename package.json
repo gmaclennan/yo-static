@@ -52,7 +52,7 @@
     "varify": "^0.1.1",
     "xhr": "^2.2.0",
     "yo-yo": "^1.2.1",
-    "yo-yoify": "^3.0.0"
+    "yo-yoify": "gmaclennan/yo-yoify#gmaclennan-patch-1"
   },
   "devDependencies": {
     "standard": "^7.1.2",
