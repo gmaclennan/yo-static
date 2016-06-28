@@ -20,10 +20,10 @@ var stripify = require('stripify')
 var envify = require('envify/custom')({
   NODE_ENV: 'production'
 })
-// replaces `bpb.browser` with `true`
+// replaces `process.browser` with `true`
 var bpb = require('bpb')
 // Removes unreachable code - once `envify` and `bpb` have run
-// unnecessary code for the serve is unreachable
+// unnecessary code for the server is unreachable
 var unreachableBranchTransform = require('unreachable-branch-transform')
 
 var config = require('../lib/config')
