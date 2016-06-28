@@ -1,18 +1,22 @@
 var budo = require('budo')
 var path = require('path')
 var fs = require('fs')
+var mkdirp = require('mkdirp')
+var rimraf = require('rimraf')
 
 var watch = require('./watch')
 var config = require('../lib/config')
 var staticConfig = require('../transforms/static-config')
-
 var bulkify = require('bulkify')
 
 var cwd = process.cwd()
 
 module.exports = function serve (argv) {
   argv = argv || {}
-  fs.unlink(config.metadata_file, function () {
+  rimraf.sync(config.site_dir)
+  mkdirp.sync(config.site_content_dir)
+  fs.writeFile(config.metadata_file, '[]', function (err) {
+    if (err) throw err
     watch()
     budo(path.join(__dirname, '../index.js'), {
       pushstate: true,

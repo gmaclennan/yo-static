@@ -59,6 +59,7 @@
     "tape": "^4.6.0"
   },
   "scripts": {
+    "start": "yo-static serve",
     "test": "standard && tape test/**/*.js"
   },
   "repository": {
