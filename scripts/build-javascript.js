@@ -8,6 +8,8 @@ var staticConfig = require('../transforms/static-config')
 var bulkify = require('bulkify')
 // Transform yo-yo template strings into pure and fast document calls.
 var yoyoify = require('yo-yoify')
+// Let's ensure everything is ES5 code - some required modules use ES2015
+var babelify = require('babelify')
 // Removes console.{log,error,info} messages
 var stripify = require('stripify')
 // Replaces `process.env.NODE_ENV` with `'production'`
@@ -30,6 +32,7 @@ module.exports = function buildJavascript (cb) {
   })
     .add('./index')
     .transform(yoyoify)
+    .transform(babelify, {presets: ['es2015']})
     .transform(staticConfig(config))
     .transform(bulkify)
     .transform(stripify)
