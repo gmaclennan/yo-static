@@ -19,12 +19,13 @@
 
 It is inspired by [**@shama**][11]'s website [dontkry.com][9] and borrows a lot of ideas from [jekyll][10]
 
-Still experimental, things will change, and some docs are needed!
+Still experimental, things will change, and some docs are needed! For now check [digidem/digital-democracy.org/tree/yo-yo][12] (also WIP)
 
 [8]: https://github.com/maxogden/yo-yo
 [9]: https://github.com/shama/dontkry.com
 [10]: https://jekyllrb.com
 [11]: https://github.com/shama
+[12]: https://github.com/digidem/digital-democracy.org/tree/yo-yo
 
 ## Table of Contents
 
