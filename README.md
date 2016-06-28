@@ -1,6 +1,6 @@
 # yo-static
 
-![stability][1]
+[![stability][1]](#development-status)
 [![travis][2]][3]
 [![npm version][4]][5]
 [![js-standard-style][6]][7]
