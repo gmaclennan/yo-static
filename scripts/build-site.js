@@ -14,7 +14,7 @@ module.exports = function buildSite (argv) {
     buildJavascript(done)
 
     function done (err) {
-      if (err) console.error(err)
+      if (err) throw err
       if (--pending === 0) {
         console.timeEnd('total')
       }
