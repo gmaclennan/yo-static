@@ -36,7 +36,7 @@ module.exports = function buildJavascript (cb) {
   })
     .add('./index')
     .plugin(collapse)
-    .transform(yoyoify)
+    .transform(yoyoify, {leaveBel: true})
     .transform(babelify, {presets: ['es2015']})
     .transform(unassertify)
     .transform(staticConfig(config))
