@@ -21,6 +21,7 @@
     "budo": "^8.3.0",
     "bulk-require": "^1.0.0",
     "bulkify": "^1.4.0",
+    "bundle-collapser": "^1.2.1",
     "chokidar": "^1.6.0",
     "debug": "^2.2.0",
     "deep-equal": "^1.0.1",

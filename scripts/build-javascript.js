@@ -2,6 +2,10 @@ var fs = require('fs')
 var path = require('path')
 var pump = require('pump')
 var browserify = require('browserify')
+// convert bundle paths to IDS to save bytes in browserify bundles
+var collapse = require('bundle-collapser/plugin')
+// removes assert statements
+var unassertify = require('unassertify')
 // Replaces `__config` variables with static values
 var staticConfig = require('../transforms/static-config')
 // Replaces bulk requires with static requires
@@ -31,8 +35,10 @@ module.exports = function buildJavascript (cb) {
     basedir: path.join(__dirname, '..')
   })
     .add('./index')
+    .plugin(collapse)
     .transform(yoyoify)
     .transform(babelify, {presets: ['es2015']})
+    .transform(unassertify)
     .transform(staticConfig(config))
     .transform(bulkify)
     .transform(stripify)
