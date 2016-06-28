@@ -35,9 +35,11 @@ function buildContent (config, cb) {
       if (err) return cb ? cb(err) : console.error(err)
       // metadataJson is an array of metadata for all content files
       const metadataJson = JSON.stringify(metadata, null, 2)
-      fs.writeFileSync(config.metadata_file, metadataJson)
-      console.timeEnd('build content')
-      if (cb) cb()
+      fs.writeFile(config.metadata_file, metadataJson, function (err) {
+        if (err) return cb ? cb(err) : console.error(err)
+        console.timeEnd('build content')
+        if (cb) cb()
+      })
     })
   })
 }

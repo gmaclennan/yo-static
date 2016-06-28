@@ -1,5 +1,6 @@
 var fs = require('fs')
 var path = require('path')
+var pump = require('pump')
 var browserify = require('browserify')
 // Replaces `__config` variables with static values
 var staticConfig = require('../transforms/static-config')
@@ -21,7 +22,8 @@ var unreachableBranchTransform = require('unreachable-branch-transform')
 
 var config = require('../lib/config')
 
-module.exports = function buildJavascript () {
+module.exports = function buildJavascript (cb) {
+  console.time('build javascript')
   var bundleStream = fs.createWriteStream(path.join(config.site_dir, 'bundle.js'))
   var b = browserify({
     basedir: path.join(__dirname, '..')
@@ -34,5 +36,8 @@ module.exports = function buildJavascript () {
     .transform(envify)
     .transform(bpb)
     .transform(unreachableBranchTransform)
-  b.bundle().pipe(bundleStream)
+  pump(b.bundle(), bundleStream, function (err) {
+    console.timeEnd('build javascript')
+    if (cb) cb(err)
+  })
 }
