@@ -2,7 +2,7 @@ var yo = require('yo-yo')
 var router = require('./lib/router')
 var captureAnchorClicks = require('./lib/util').captureAnchorClicks
 
-var el = document.documentElement
+var el = document.body
 
 // Add trailing slash to missing routes and try again
 router.on('error', function (route, err) {
