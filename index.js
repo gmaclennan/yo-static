@@ -12,6 +12,10 @@ router.on('error', function (route, err) {
   console.log(router, err)
 })
 
+router.on('loading', function () {
+  el.classList.add('yo-static-loading')
+})
+
 // On transition, render the app with the page
 router.on('transition', function (route, page) {
   yo.update(el, page)
