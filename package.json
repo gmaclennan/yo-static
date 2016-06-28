@@ -39,7 +39,7 @@
     "rimraf": "^2.5.2",
     "run-parallel-limit": "^1.0.3",
     "slug": "^0.9.1",
-    "stripify": "^4.0.0",
+    "stripify": "gmaclennan/stripify#patch-1",
     "through": "^2.3.8",
     "through2": "^2.0.1",
     "titlecase": "^1.1.2",
