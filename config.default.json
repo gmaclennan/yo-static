@@ -11,6 +11,9 @@
     "linkify": true,
     "typographer": true
   },
+  "markdown_plugins": [
+    "markdown-it-footnote"
+  ],
   "blacklist": [
     "package.json",
     "CNAME"

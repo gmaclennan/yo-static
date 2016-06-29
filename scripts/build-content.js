@@ -13,7 +13,17 @@ function buildContent (config, cb) {
   Object.assign(config, require('../lib/config'))
 
   config.renderer = require('markdown-it')(config.markdown_opts)
-    .use(require('markdown-it-footnote'))
+
+  ;(config.markdown_plugins || []).forEach(function (p) {
+    try {
+      config.renderer.use(require(p))
+    } catch (e) {
+      console.error('Cannot find the markdown plugin you are trying to add.\n' +
+        'Check you have installed it with `npm install ' + p + '` and check\n' +
+        'for any silly spelling mistakes')
+      throw e
+    }
+  })
 
   mkdirp.sync(config.site_dir)
 
