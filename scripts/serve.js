@@ -24,7 +24,8 @@ module.exports = function serve (argv) {
       watchGlob: '**/*.{html,css}',
       stream: process.stdout, // log to stdout
       dir: [
-        path.join(cwd, '_site')
+        path.join(cwd, '_site'),
+        cwd
       ],
       verbose: true,
       browserify: {
