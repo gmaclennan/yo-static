@@ -11,6 +11,8 @@ var bulkify = require('bulkify')
 
 var cwd = process.cwd()
 
+var userTransforms = require('./user-transforms')
+
 module.exports = function serve (argv) {
   argv = argv || {}
   rimraf.sync(config.site_dir)
@@ -18,7 +20,7 @@ module.exports = function serve (argv) {
   fs.writeFile(config.metadata_file, '[]', function (err) {
     if (err) throw err
     watch()
-    budo(path.join(__dirname, '../index.js'), {
+    budo(path.join(__dirname, '..', 'index.js'), {
       pushstate: true,
       live: true,             // live reload
       watchGlob: '**/*.{html,css}',
@@ -32,7 +34,7 @@ module.exports = function serve (argv) {
         transform: [
           staticConfig(config),
           bulkify
-        ],
+        ].concat(userTransforms),
         debug: true
       },
       defaultIndex: function () {

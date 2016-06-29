@@ -26,6 +26,7 @@ var bpb = require('bpb')
 // unnecessary code for the server is unreachable
 var unreachableBranchTransform = require('unreachable-branch-transform')
 
+var userTransforms = require('./user-transforms')
 var config = require('../lib/config')
 
 module.exports = function buildJavascript (cb) {
@@ -36,7 +37,12 @@ module.exports = function buildJavascript (cb) {
   })
     .add('./index')
     .plugin(collapse)
-    .transform(yoyoify, {leaveBel: true})
+
+  userTransforms.forEach(function (t) {
+    b.transform(t)
+  })
+
+  b.transform(yoyoify, {leaveBel: true})
     .transform(babelify, {presets: ['es2015']}, {global: true})
     .transform(unassertify, {global: true})
     .transform(staticConfig(config))
