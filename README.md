@@ -52,8 +52,9 @@ npm i -g yo-static
 Create pages by creating javascript files in a `_pages` folder. They must export a function that will receive a `props` argument and must return a DOM element that will be rendered to the page body.
 
 ```js
+// _pages/index.js
 var yo = require('yo-yo')
-var layout = require('./default-layout')
+var layout = require('../_layouts/default.js')
 
 module.exports = function renderIndex (props) {
   return layout({},
@@ -70,6 +71,7 @@ Create content by creating markdown files in a `_content` folder. You can define
 Create layouts as javascript files in a `_layouts`, the content will be available as the second argument:
 
 ```js
+// _layouts/default.js
 var yo = require('yo-yo')
 
 module.exports = function defaultLayout (props, children) {
