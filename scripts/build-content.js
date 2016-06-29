@@ -20,9 +20,9 @@ function buildContent (config, cb) {
   console.time('build content')
 
   glob('**/*.{md,mdown,markdown}', { cwd: config.content_dir }, function (err, files) {
-    if (err) return console.error(err)
+    if (err) return cb ? cb(err) : console.error(err)
     if (files.length === 0) {
-      return console.error(`No markdown files found in path ${config.content_dir}`)
+      console.warn(`No markdown files found in path ${config.content_dir}`)
     }
 
     const tasks = files.map(function (file) {
