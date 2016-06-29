@@ -24,6 +24,8 @@ router.on('error', function (route, err) {
 })
 
 router.on('loading', function () {
+  // We can use this to style the page or add a :before overlay to show
+  // loading state. This class is removed when the page loads.
   el.classList.add('yo-static-loading')
 })
 
@@ -35,6 +37,8 @@ router.on('transition', function (route, page) {
 // Capture all non-outgoing clicks to call transitionTo instead
 captureAnchorClicks(function (pathname) {
   router.transitionTo(pathname)
+  // We don't store scroll state, so clicking 'back' will always return
+  // to the top of the page
   window.scrollTo(0, 0)
 })
 
