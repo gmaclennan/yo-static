@@ -4,6 +4,7 @@ var argv = require('minimist')(process.argv.slice(2))
 
 var buildSite = require('../scripts/build-site')
 var buildJavascript = require('../scripts/build-javascript')
+var buildStatic = require('../scripts/build-static')
 var serve = require('../scripts/serve')
 
 switch (argv._[0]) {
@@ -12,6 +13,9 @@ switch (argv._[0]) {
     break
   case 'build-js':
     buildJavascript()
+    break
+  case 'build-static':
+    buildStatic()
     break
   case 'serve':
     serve(argv)

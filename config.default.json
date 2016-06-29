@@ -16,6 +16,11 @@
   ],
   "blacklist": [
     "package.json",
-    "CNAME"
+    "CNAME",
+    "**/*.{md,mdown,markdown}",
+    "node_modules/*",
+    "npm-debug.log",
+    "*.DS_Store",
+    "Icon*"
   ]
 }
