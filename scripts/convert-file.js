@@ -50,13 +50,18 @@ function replaceExt (str, ext) {
 
 const dateRegExp = /^(?:(\d\d\d\d-\d\d-\d\d)-)?(.*)/
 
-// Parse permalink and title from filename and path
+// Parse permalink, collection, categories and title
+// from filename and path
 function parseFilename (file) {
   const meta = {}
-  const filepath = file.split('/').slice(0, -1).join('/')
+  const dirs = path.dirname(file).split(path.sep)
+  meta.collection = dirs.shift()
+  if (dirs.length) meta.categories = dirs
   const matches = dateRegExp.exec(path.parse(file).name)
   if (matches[1]) meta.date = matches[1]
-  meta.permalink = '/' + filepath + '/' + slugify(matches[2])
+  // TODO: allow configuration of permalink and checking for
+  // duplicate permalinks
+  meta.permalink = '/' + meta.collection + '/' + slugify(matches[2])
   meta.title = toTitleCase(matches[2].split('-').join(' '))
   return meta
 }
