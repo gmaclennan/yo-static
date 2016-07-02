@@ -28,7 +28,10 @@ function buildStatic (config, cb) {
     nodir: true
   }, function (err, files) {
     if (err) return cb ? cb(err) : console.error(err)
-    if (!files.length) return cb && cb()
+    if (!files.length) {
+      console.timeEnd('build static assets')
+      return cb && cb()
+    }
 
     const tasks = files.map(function (file) {
       const src = path.resolve(cwd, file)
