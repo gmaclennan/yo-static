@@ -2,8 +2,8 @@ var budo = require('budo')
 var path = require('path')
 var fs = require('fs')
 var mkdirp = require('mkdirp')
-var rimraf = require('rimraf')
 
+var deleteSite = require('./delete-site')
 var watch = require('./watch')
 var config = require('../lib/config')
 var staticConfig = require('../transforms/static-config')
@@ -15,7 +15,7 @@ var userTransforms = require('./user-transforms')
 
 module.exports = function serve (argv) {
   argv = argv || {}
-  rimraf.sync(config.site_dir)
+  deleteSite()
   mkdirp.sync(config.site_content_dir)
   fs.writeFile(config.metadata_file, '[]', function (err) {
     if (err) throw err

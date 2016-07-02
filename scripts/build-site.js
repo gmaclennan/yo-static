@@ -1,7 +1,9 @@
 var buildContent = require('./build-content')
+var deleteSite = require('./delete-site')
 
 module.exports = function buildSite (argv) {
   console.time('total')
+  deleteSite()
   argv = argv || {}
   buildContent(argv, function (err) {
     if (err) return console.error('Error building content:', err)
