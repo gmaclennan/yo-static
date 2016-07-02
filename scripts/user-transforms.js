@@ -15,15 +15,17 @@ try {
   userTransforms = browserifySettings && browserifySettings.transform
 } catch (e) {}
 
-userTransforms = userTransforms.length && userTransforms.map(function (t) {
-  try {
-    var modulePath = relative.resolve(t, cwd)
-    return require(modulePath)
-  } catch (e) {
-    console.error(e)
-    throw new Error('You included a custom transform in your `package.json`\n' +
-      'but we couldn\'t find it, try `npm i ' + t + '`')
-  }
-})
+userTransforms = userTransforms &&
+  userTransforms.length &&
+  userTransforms.map(function (t) {
+    try {
+      var modulePath = relative.resolve(t, cwd)
+      return require(modulePath)
+    } catch (e) {
+      console.error(e)
+      throw new Error('You included a custom transform in your `package.json`\n' +
+        'but we couldn\'t find it, try `npm i ' + t + '`')
+    }
+  })
 
 module.exports = userTransforms || []
