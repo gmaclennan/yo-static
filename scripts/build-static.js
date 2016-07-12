@@ -7,10 +7,13 @@ const mkdirp = require('mkdirp')
 const parallelLimit = require('run-parallel-limit')
 
 var cwd = process.cwd()
+var gitignore = []
 
-var gitignore = fs.readFileSync(path.join(cwd, '.gitignore'), 'utf8')
-  .split('\n')
-  .filter(s => s.length && s.slice(0, 1) !== '#')
+try {
+  gitignore = fs.readFileSync(path.join(cwd, '.gitignore'), 'utf8')
+    .split('\n')
+    .filter(s => s.length && s.slice(0, 1) !== '#')
+} catch (e) {}
 
 module.exports = buildStatic
 
