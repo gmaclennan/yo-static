@@ -4,7 +4,7 @@ var router = require('./lib/router')
 var captureAnchorClicks = require('./lib/util').captureAnchorClicks
 var notFound = require('./components/404.js')
 
-var el = document.body
+var el = document.getElementById('__yo_static_root')
 var originalPath = window.location.pathname
 
 // Add trailing slash to missing routes and try again

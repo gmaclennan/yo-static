@@ -2,7 +2,6 @@ var yo = require('yo-yo')
 var layout = require('./default-layout')
 
 module.exports = function renderIndex (props) {
-  console.log(props)
   return layout({},
     yo`<div>
       <h1>Welcome to Yo-Static</h1>

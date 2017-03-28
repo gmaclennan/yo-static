@@ -1,4 +1,3 @@
-const yo = require('yo-yo')
 const fs = require('fs')
 const path = require('path')
 const mkdirp = require('mkdirp')
@@ -10,7 +9,6 @@ const pages = require('../lib/pages')
 const sanitizePath = require('../lib/util').sanitizePath
 
 const docType = '<!DOCTYPE html>\n'
-const scriptTag = yo`<script src="/bundle.js"></script>`
 
 module.exports = function buildPages (argv, cb) {
   const errors = []
@@ -33,7 +31,6 @@ module.exports = function buildPages (argv, cb) {
   router.on('transition', function (route, page) {
     const filename = path.join(config.site_dir, route.replace(/\/$/, '/index.html'))
     mkdirp(path.dirname(filename))
-    page.getElementsByTagName('body')[0].appendChild(scriptTag)
     fs.writeFile(filename, docType + page.toString(), function () {
       if (routes.length) {
         router.transitionTo(routes.shift())
