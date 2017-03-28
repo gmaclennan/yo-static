@@ -18,6 +18,7 @@ module.exports = function buildSite (argv) {
     buildJavascript(done)
 
     function done (err) {
+      // TODO: err is an array, give a stack trace for each error...
       if (err) throw err
       if (--pending === 0) {
         console.timeEnd('total')

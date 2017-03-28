@@ -30,14 +30,17 @@ module.exports = function buildPages (argv, cb) {
   // On transition, render the app with the page
   router.on('transition', function (route, page) {
     const filename = path.join(config.site_dir, route.replace(/\/$/, '/index.html'))
-    mkdirp(path.dirname(filename))
-    fs.writeFile(filename, docType + page.toString(), function () {
-      if (routes.length) {
-        router.transitionTo(routes.shift())
-      } else {
-        console.timeEnd('build pages')
-        if (cb) return cb(errors.length ? errors : null)
-      }
+    mkdirp(path.dirname(filename), function (err) {
+      if (err) errors.push(err)
+      fs.writeFile(filename, docType + page.toString(), function (err) {
+        if (err) errors.push(err)
+        if (routes.length) {
+          router.transitionTo(routes.shift())
+        } else {
+          console.timeEnd('build pages')
+          if (cb) return cb(errors.length ? errors : null)
+        }
+      })
     })
   })
 
