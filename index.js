@@ -9,10 +9,16 @@ var render = require('./lib/render')
 var captureAnchorClicks = require('./lib/util').captureAnchorClicks
 var notFound = require('./components/404.js')
 
+var api = require('./lib/api')()
+
 var el = document.getElementById('__yo_static_root')
 var originalPath = window.location.pathname
 
-var router = createRouter(render)
+var content = document.getElementById('__yo_static_content')
+
+if (content && content.dataset.src) api.cache(content.dataset.src, content.innerHTML)
+
+var router = createRouter(render, api)
 
 router.addPageRoutes(pages)
 router.addContentRoutes(metadata.byPermalink)

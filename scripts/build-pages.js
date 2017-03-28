@@ -9,6 +9,8 @@ const metadata = require('../lib/metadata')
 const pages = require('../lib/pages')
 const sanitizePath = require('../lib/util').sanitizePath
 
+const api = require('../lib/api')()
+
 const docType = '<!DOCTYPE html>\n'
 
 module.exports = function buildPages (argv, cb) {
@@ -18,7 +20,7 @@ module.exports = function buildPages (argv, cb) {
   const routes = metadata.asArray.map(m => m.permalink).map(sanitizePath)
   Array.prototype.push.apply(routes, Object.keys(pages).map(sanitizePath))
 
-  var router = createRouter(render)
+  var router = createRouter(render, api)
 
   router.addPageRoutes(pages)
   router.addContentRoutes(metadata.byPermalink)
