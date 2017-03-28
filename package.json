@@ -13,6 +13,7 @@
     "babelify": "^7.3.0",
     "base-router": "^1.1.0",
     "bpb": "^0.2.2",
+    "browserify": "^14.1.0",
     "budo": "^8.3.0",
     "bulk-require": "^1.0.0",
     "bulkify": "^1.4.0",
@@ -54,10 +55,13 @@
   "devDependencies": {
     "standard": "^7.1.2",
     "tape": "^4.6.0"
+    "tape-run": "^3.0.0"
   },
   "scripts": {
     "start": "yo-static serve",
-    "test": "standard && tape test/**/*.js"
+    "test": "standard && npm run test:node && npm run test:browser",
+    "test:node": "tape test/**/*.js",
+    "test:browser": "node bin/test 'test/*.js' | tape-run"
   },
   "repository": {
     "type": "git",

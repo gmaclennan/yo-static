@@ -1,15 +1,17 @@
-var staticConfig = require('../transforms/static-config')
+var staticVars = require('../transforms/static-vars')
 var test = require('tape')
 
 test('Replaces environment variables', function (t) {
   var buffer = ''
-  var stream = staticConfig({
-    LOREM: 'ipsum',
-    HELLO: 'world',
-    ZALGO: 'it comes'
-  })
+  var vars = {
+    __config: {
+      LOREM: 'ipsum',
+      HELLO: 'world',
+      ZALGO: 'it comes'
+    }
+  }
 
-  stream()
+  staticVars('file.js', vars)
     .on('data', function (d) { buffer += d })
     .on('end', function () {
       t.notEqual(-1, buffer.indexOf('ipsum'))
@@ -28,13 +30,15 @@ test('Replaces environment variables', function (t) {
 
 test('Ignores assignments', function (t) {
   var buffer = ''
-  var stream = staticConfig({
-    LOREM: 'ipsum',
-    HELLO: 'world',
-    UP: 'down'
-  })
+  var vars = {
+    __config: {
+      LOREM: 'ipsum',
+      HELLO: 'world',
+      UP: 'down'
+    }
+  }
 
-  stream()
+  staticVars('file.js', vars)
     .on('data', function (d) { buffer += d })
     .on('end', function () {
       t.notEqual(-1, buffer.indexOf('world'))
@@ -58,12 +62,14 @@ test('Ignores assignments', function (t) {
 
 test("Doesn't ignore assigning to a variable", function (t) {
   var buffer = ''
-  var stream = staticConfig({
-    LOREM: 'ipsum',
-    HELLO: 'world'
-  })
+  var vars = {
+    __config: {
+      LOREM: 'ipsum',
+      HELLO: 'world'
+    }
+  }
 
-  stream()
+  staticVars('file.js', vars)
     .on('data', function (d) { buffer += d })
     .on('end', function () {
       t.notEqual(-1, buffer.indexOf('foo = "ipsum"'))
@@ -89,17 +95,17 @@ test("Doesn't ignore assigning to a variable", function (t) {
 })
 
 test('Handles getter properties', function (t) {
-  var env = {}
+  var env = { __config: {} }
   var buffer = ''
-  var stream = staticConfig(env)
   var counter = 0
 
-  Object.defineProperty(env, 'DYNAMIC', {
+  Object.defineProperty(env.__config, 'DYNAMIC', {
     // please don't actually do this:
     get: function () { return counter++ ? 'really!' : 'dynamic!' }
   })
 
-  stream().on('data', function (d) { buffer += d })
+  staticVars('file.js', env)
+    .on('data', function (d) { buffer += d })
     .on('end', function () {
       t.notEqual(-1, buffer.indexOf('foo = "dynamic!"'))
       t.notEqual(-1, buffer.indexOf('bar = "really!"'))
@@ -113,9 +119,8 @@ test('Handles getter properties', function (t) {
 
 test('Replaces require statements', function (t) {
   var buffer = ''
-  var stream = staticConfig({})
 
-  stream()
+  staticVars('file.js', {__config: {}})
     .on('data', function (d) { buffer += d })
     .on('end', function () {
       t.notEqual(-1, buffer.indexOf('var __config = {}'))

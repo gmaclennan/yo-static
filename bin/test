@@ -1,0 +1,24 @@
+#!/usr/bin/env node
+
+var browserify = require('browserify')
+var glob = require('glob')
+var bulkify = require('bulkify')
+var yoyoify = require('yo-yoify')
+var babelify = require('babelify')
+
+var config = require('../lib/config')
+var staticVars = require('../transforms/static-vars')
+
+var argv = require('minimist')(process.argv.slice(2))
+
+var files = argv._.reduce((acc, arg) => {
+  return acc.concat(glob.sync(arg))
+}, [])
+
+var b = browserify(files)
+  .transform(yoyoify, {leaveBel: false})
+  .transform(babelify, {presets: ['es2015']}, {global: true})
+  .transform(staticVars, {__config: config})
+  .transform(bulkify)
+
+b.bundle().pipe(process.stdout)
