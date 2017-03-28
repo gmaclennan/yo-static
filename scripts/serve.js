@@ -6,7 +6,7 @@ var mkdirp = require('mkdirp')
 var deleteSite = require('./delete-site')
 var watch = require('./watch')
 var config = require('../lib/config')
-var staticConfig = require('../transforms/static-config')
+var staticVars = require('../transforms/static-vars')
 var bulkify = require('bulkify')
 
 var cwd = process.cwd()
@@ -32,7 +32,7 @@ module.exports = function serve (argv) {
       verbose: true,
       browserify: {
         transform: [
-          staticConfig(config),
+          [staticVars, {__config: config}],
           bulkify
         ].concat(userTransforms),
         debug: true

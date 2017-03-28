@@ -7,7 +7,7 @@ var collapse = require('bundle-collapser/plugin')
 // removes assert statements
 var unassertify = require('unassertify')
 // Replaces `__config` variables with static values
-var staticConfig = require('../transforms/static-config')
+var staticVars = require('../transforms/static-vars')
 // Replaces bulk requires with static requires
 var bulkify = require('bulkify')
 // Transform yo-yo template strings into pure and fast document calls.
@@ -33,7 +33,8 @@ module.exports = function buildJavascript (cb) {
   console.time('build javascript')
   var bundleStream = fs.createWriteStream(path.join(config.site_dir, 'bundle.js'))
   var b = browserify({
-    basedir: path.join(__dirname, '..')
+    basedir: path.join(__dirname, '..'),
+    debug: false
   })
     .add('./index')
     .plugin(collapse)
@@ -42,10 +43,10 @@ module.exports = function buildJavascript (cb) {
     b.transform(t)
   })
 
-  b.transform(yoyoify, {leaveBel: true})
+  b.transform(yoyoify, {leaveBel: false})
     .transform(babelify, {presets: ['es2015']}, {global: true})
     .transform(unassertify, {global: true})
-    .transform(staticConfig(config))
+    .transform(staticVars, {__config: config})
     .transform(bulkify)
     .transform(stripify, {global: true})
     .transform(envify, {global: true})
