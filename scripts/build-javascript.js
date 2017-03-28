@@ -13,7 +13,7 @@ var bulkify = require('bulkify')
 // Transform yo-yo template strings into pure and fast document calls.
 var yoyoify = require('yo-yoify')
 // Let's ensure everything is ES5 code - some required modules use ES2015
-var babelify = require('babelify')
+var bublefy = require('../transforms/bublefy')
 // Removes console.{log,error,info} messages
 var stripify = require('stripify')
 // Replaces `process.env.NODE_ENV` with `'production'`
@@ -44,7 +44,7 @@ module.exports = function buildJavascript (cb) {
   })
 
   b.transform(yoyoify, {leaveBel: false})
-    .transform(babelify, {presets: ['es2015']}, {global: true})
+    .transform(bublefy, {global: true})
     .transform(unassertify, {global: true})
     .transform(staticVars, {__config: config})
     .transform(bulkify)
