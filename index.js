@@ -1,11 +1,21 @@
 var window = require('global/window')
 var yo = require('yo-yo')
-var router = require('./lib/router')
+
+var __config = require('./lib/config')
+var pages = require('./lib/pages')
+var metadata = require('./lib/metadata')
+var createRouter = require('./lib/router')
+var render = require('./lib/render')
 var captureAnchorClicks = require('./lib/util').captureAnchorClicks
 var notFound = require('./components/404.js')
 
 var el = document.getElementById('__yo_static_root')
 var originalPath = window.location.pathname
+
+var router = createRouter(render)
+
+router.addPageRoutes(pages)
+router.addContentRoutes(metadata.byPermalink)
 
 // Add trailing slash to missing routes and try again
 router.on('error', function (route, err) {

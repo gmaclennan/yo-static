@@ -3,7 +3,8 @@ const path = require('path')
 const mkdirp = require('mkdirp')
 
 const config = require('../lib/config')
-const router = require('../lib/router')
+const createRouter = require('../lib/router')
+const render = require('../lib/render')
 const metadata = require('../lib/metadata')
 const pages = require('../lib/pages')
 const sanitizePath = require('../lib/util').sanitizePath
@@ -16,6 +17,11 @@ module.exports = function buildPages (argv, cb) {
 
   const routes = metadata.asArray.map(m => m.permalink).map(sanitizePath)
   Array.prototype.push.apply(routes, Object.keys(pages).map(sanitizePath))
+
+  var router = createRouter(render)
+
+  router.addPageRoutes(pages)
+  router.addContentRoutes(metadata.byPermalink)
 
   // Add trailing slash to missing routes and try again
   router.on('error', function (route, err) {
