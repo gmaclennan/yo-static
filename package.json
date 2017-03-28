@@ -8,7 +8,6 @@
     "./lib/api.js": "./lib/api-browser.js"
   },
   "dependencies": {
-    "acorn": "^3.2.0",
     "base-router": "^1.1.0",
     "bpb": "^0.2.2",
     "browserify": "^14.1.0",
@@ -28,7 +27,6 @@
     "glob": "^7.0.5",
     "global": "^4.3.0",
     "gray-matter": "^2.0.2",
-    "jstransform": "^11.0.3",
     "lru": "^3.1.0",
     "markdown-it": "^8.3.1",
     "markdown-it-footnote": "^3.0.1",
@@ -42,7 +40,6 @@
     "run-parallel-limit": "^1.0.3",
     "slug": "^0.9.1",
     "stripify": "^6.0.0",
-    "through": "^2.3.8",
     "through2": "^2.0.1",
     "titlecase": "^1.1.2",
     "uglifyify": "^3.0.2",
