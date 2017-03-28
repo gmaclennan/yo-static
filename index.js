@@ -5,18 +5,28 @@ var __config = require('./lib/config')
 var pages = require('./lib/pages')
 var metadata = require('./lib/metadata')
 var createRouter = require('./lib/router')
-var render = require('./lib/render')
+var createRenderer = require('./lib/render')
 var captureAnchorClicks = require('./lib/util').captureAnchorClicks
 var notFound = require('./components/404.js')
+var siteConfig = require(__config.config_file)
+var layouts = require('./lib/layouts')
+var head = require('./lib/head')
 
 var api = require('./lib/api')()
 
 var el = document.getElementById('__yo_static_root')
 var originalPath = window.location.pathname
 
-var content = document.getElementById('__yo_static_content')
+// Pages are rendered on the server, and when they first load in the browser
+// the api will try to load the content to replace the static HTML with
+// dynamic content. We already have this content in the static HTML, so we
+// grab that, and put it in the API cache, to avoid an unnecessary request
+var bootstrappedContent = document.getElementById('__yo_static_content')
+if (bootstrappedContent && bootstrappedContent.dataset.src) {
+  api.cache(bootstrappedContent.dataset.src, bootstrappedContent.innerHTML)
+}
 
-if (content && content.dataset.src) api.cache(content.dataset.src, content.innerHTML)
+var render = createRenderer(metadata.byFilePath, layouts, head, {siteConfig: siteConfig})
 
 var router = createRouter(render, api)
 

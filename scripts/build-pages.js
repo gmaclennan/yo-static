@@ -4,10 +4,13 @@ const mkdirp = require('mkdirp')
 
 const config = require('../lib/config')
 const createRouter = require('../lib/router')
-const render = require('../lib/render')
+const createRenderer = require('../lib/render')
 const metadata = require('../lib/metadata')
 const pages = require('../lib/pages')
 const sanitizePath = require('../lib/util').sanitizePath
+var siteConfig = require(config.config_file)
+var layouts = require('../lib/layouts')
+var head = require('../lib/head')
 
 const api = require('../lib/api')()
 
@@ -19,6 +22,8 @@ module.exports = function buildPages (argv, cb) {
 
   const routes = metadata.asArray.map(m => m.permalink).map(sanitizePath)
   Array.prototype.push.apply(routes, Object.keys(pages).map(sanitizePath))
+
+  var render = createRenderer(metadata.byFilePath, layouts, head, {siteConfig: siteConfig})
 
   var router = createRouter(render, api)
 
