@@ -37,7 +37,7 @@ function buildStatic (config, cb) {
       const src = path.resolve(cwd, file)
       const dst = path.join(config.site_dir, file)
       return function (cb) {
-        fs.copy(src, dst, {clobber: true}, cb)
+        fs.copy(src, dst, {overwrite: true}, cb)
       }
     })
 

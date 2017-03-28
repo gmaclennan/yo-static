@@ -95,7 +95,7 @@ function writeMetadata (metadata, cb) {
 function copyFile (filepath) {
   const src = path.resolve(cwd, filepath)
   const dst = path.resolve(config.site_dir, filepath)
-  fs.copy(src, dst, {clobber: true}, function (err) {
+  fs.copy(src, dst, {overwrite: true}, function (err) {
     if (err) return console.error(err)
     debug('Updated file:', filepath)
   })
