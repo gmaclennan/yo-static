@@ -5,12 +5,18 @@ var falafel = require('falafel')
 
 module.exports = function staticifyConfig (file, staticVars) {
   staticVars = staticVars || {}
+
   var staticVarNames = Object.keys(staticVars)
+    // Remove browserify specific options also passed through
+    .filter(name => name !== '_flag')
 
   if (/\.json$/.test(file)) return through()
 
+  var source = ''
   var output = through(function (buf, enc, next) {
-    var source = buf.toString('utf8')
+    source += buf.toString('utf8')
+    next()
+  }, function (cb) {
     try {
       var injectified = falafel(source, {
         ecmaVersion: 6,
@@ -21,7 +27,7 @@ module.exports = function staticifyConfig (file, staticVars) {
     }
 
     this.push(injectified.toString())
-    next()
+    cb()
   })
 
   function walk (node) {

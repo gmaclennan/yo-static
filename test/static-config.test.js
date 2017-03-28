@@ -130,3 +130,35 @@ test('Replaces require statements', function (t) {
       'var __config = require(\'myfile\')'
     ].join('\n'))
 })
+
+test('handles sourcefile being passed in chunks', function (t) {
+  var buffer = ''
+  var vars = {
+    __config: {
+      LOREM: 'ipsum',
+      HELLO: 'world',
+      ZALGO: 'it comes'
+    }
+  }
+
+  var stream = staticVars('file.js', vars)
+    .on('data', function (d) { buffer += d })
+    .on('end', function () {
+      t.notEqual(-1, buffer.indexOf('ipsum'))
+      t.notEqual(-1, buffer.indexOf('world'))
+      t.notEqual(-1, buffer.indexOf('it comes'))
+      t.notEqual(-1, buffer.indexOf('__config[ZALGO]'))
+      t.end()
+    })
+  stream.write(`
+    var obj = {
+      a: __config.LOREM,
+      b: __config.HELLO,
+  `)
+  stream.write(`
+      c: __config["ZALGO"],
+      d: __config[ZALGO]
+    }
+  `)
+  stream.end()
+})
